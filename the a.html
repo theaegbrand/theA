@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THE A — Women's Clothing</title>
+<meta name="description" content="THE A women's clothing. Browse the collection and order through Instagram, WhatsApp or Facebook.">
+<style>
+:root{
+  --burgundy:#6B1B2E; --burgundy-dark:#4E1121; --pink:#F8E1E6; --pink-soft:#FCF1F3;
+  --white:#fff; --ink:#2B1B1F; --muted:#7A6A6E; --line:#EADDE0; --grey:#F5F2F2;
+  --serif:"Didot","Bodoni MT","Playfair Display","Georgia",serif;
+  --sans:"Helvetica Neue","Segoe UI",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:var(--sans);color:var(--ink);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--burgundy);outline-offset:2px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.1}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 28px;background:var(--burgundy);color:#fff;letter-spacing:.14em;font-size:.78rem;text-decoration:none;transition:background .25s,transform .25s}
+.btn:hover{background:var(--burgundy-dark);transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--burgundy);box-shadow:inset 0 0 0 1px var(--burgundy)}
+.btn.ghost:hover{background:var(--burgundy);color:#fff}
+
+/* Nav */
+header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:var(--serif);font-size:1.7rem;letter-spacing:.18em;color:var(--burgundy);text-decoration:none}
+.links{display:flex;gap:30px;list-style:none}
+.links a{text-decoration:none;font-size:.88rem;letter-spacing:.06em;position:relative;padding:6px 0}
+.links a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--burgundy);transition:width .3s}
+.links a:hover::after{width:100%}
+.burger{display:none;width:44px;height:44px;position:relative}
+.burger span{position:absolute;left:10px;right:10px;height:2px;background:var(--burgundy);transition:.3s}
+.burger span:nth-child(1){top:15px}.burger span:nth-child(2){top:21px}.burger span:nth-child(3){top:27px}
+.burger.open span:nth-child(1){top:21px;transform:rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){top:21px;transform:rotate(-45deg)}
+
+/* Hero */
+.hero{padding-top:64px;background:var(--pink-soft)}
+.hero-grid{display:grid;grid-template-columns:1fr 1.05fr;min-height:calc(100vh - 64px);align-items:stretch}
+.hero-copy{display:flex;flex-direction:column;justify-content:center;padding:56px 22px 56px max(22px,calc((100vw - 1160px)/2 + 22px));gap:22px}
+.hero h1{font-size:clamp(5rem,15vw,10.5rem);letter-spacing:.06em;color:var(--burgundy);line-height:.9}
+.hero p{font-family:var(--serif);font-size:clamp(1.3rem,2.6vw,1.8rem);font-style:italic;color:var(--ink)}
+.hero .sub{font-family:var(--sans);font-style:normal;font-size:.95rem;color:var(--muted);max-width:34ch}
+.hero-copy .btn{align-self:flex-start;margin-top:6px}
+.hero-img{position:relative;min-height:420px}
+
+/* Image frame + fallback */
+.frame{position:relative;width:100%;height:100%;background:var(--grey);overflow:hidden}
+.frame img{width:100%;height:100%;object-fit:cover;transition:opacity .35s,transform .8s}
+.frame .fallback{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:linear-gradient(160deg,var(--pink) 0,var(--grey) 100%);color:var(--burgundy);text-align:center;padding:20px}
+.frame .fallback b{font-family:var(--serif);font-weight:400;font-size:1.5rem;letter-spacing:.14em}
+.frame .fallback small{color:var(--muted);font-size:.85rem}
+.frame.missing img{display:none}
+.frame.missing .fallback{display:flex}
+
+/* Sections */
+section{padding:96px 0}
+.sec-head{max-width:620px;margin-bottom:56px}
+.sec-head h2{font-size:clamp(2.2rem,5vw,3.4rem);color:var(--burgundy);margin-bottom:14px}
+.sec-head p{color:var(--muted)}
+.notice{background:var(--pink-soft);border-left:3px solid var(--burgundy);padding:16px 20px;margin-bottom:64px;font-size:.95rem;max-width:760px}
+
+/* Products */
+.product{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:start;padding:56px 0;border-top:1px solid var(--line)}
+.product:nth-of-type(even) .gallery{order:2}
+.main-img{aspect-ratio:4/5;position:relative}
+.badge{position:absolute;top:16px;left:16px;z-index:2;background:var(--burgundy);color:#fff;padding:6px 14px;font-size:.78rem;letter-spacing:.1em}
+.thumbs{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.thumb{width:68px;height:84px;padding:0;opacity:.6;border:1px solid transparent;transition:.25s}
+.thumb.active,.thumb:hover{opacity:1;border-color:var(--burgundy)}
+.info h3{font-size:clamp(2rem,4vw,2.8rem);margin-bottom:14px}
+.price{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.price .now{font-family:var(--serif);font-size:2.2rem;color:var(--burgundy)}
+.price .was{color:var(--muted);text-decoration:line-through;font-size:1.05rem}
+.price .off{background:var(--pink);color:var(--burgundy);padding:3px 10px;font-size:.82rem}
+.desc{color:var(--muted);margin:14px 0 22px;max-width:48ch}
+.row{margin-bottom:22px}
+.row .label{display:flex;justify-content:space-between;align-items:center;font-size:.9rem;margin-bottom:10px}
+.row .label span{color:var(--muted)}
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opt{min-width:48px;min-height:48px;padding:0 18px;border:1px solid var(--line);transition:.2s;font-size:.92rem}
+.opt:hover{border-color:var(--burgundy)}
+.opt[aria-pressed="true"]{background:var(--burgundy);border-color:var(--burgundy);color:#fff}
+.link{color:var(--burgundy);text-decoration:underline;text-underline-offset:4px;font-size:.88rem;min-height:44px;padding:0 2px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+
+/* About / contact / footer */
+.about{background:var(--pink-soft)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.about h2{font-size:clamp(2.2rem,5vw,3.4rem);color:var(--burgundy)}
+.about p{margin-top:18px;color:var(--ink);max-width:52ch}
+.about .frame{aspect-ratio:1}
+.contact{text-align:center}
+.contact .sec-head{margin:0 auto 36px}
+.contact .opts{justify-content:center}
+footer{background:var(--burgundy-dark);color:#f3dfe4;padding:56px 0 28px}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px}
+footer .logo{color:#fff;font-size:1.6rem}
+footer p{font-size:.9rem;margin-top:10px;opacity:.85}
+footer ul{list-style:none}
+footer li a{text-decoration:none;font-size:.9rem;display:inline-block;padding:5px 0;opacity:.85}
+footer li a:hover{opacity:1;text-decoration:underline}
+.copy{border-top:1px solid rgba(255,255,255,.18);margin-top:36px;padding-top:20px;font-size:.82rem;opacity:.7}
+
+/* Modals */
+.modal{position:fixed;inset:0;z-index:100;background:rgba(43,27,31,.55);display:none;align-items:center;justify-content:center;padding:16px}
+.modal.show{display:flex;animation:fade .25s}
+.box{background:#fff;width:100%;max-width:560px;max-height:92vh;overflow:auto;padding:34px 28px 28px;position:relative;animation:rise .3s}
+.box h3{font-size:2rem;color:var(--burgundy);margin-bottom:6px}
+.box .x{position:absolute;top:8px;right:8px;width:44px;height:44px;font-size:1.6rem;color:var(--burgundy)}
+.box p.small{color:var(--muted);font-size:.9rem;margin-bottom:16px}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th,td{padding:12px 8px;text-align:center;border-bottom:1px solid var(--line)}
+th{background:var(--pink-soft);color:var(--burgundy);font-weight:600}
+tbody tr:hover{background:var(--pink-soft)}
+.tablewrap{overflow-x:auto}
+.summary{background:var(--pink-soft);padding:14px 16px;margin-bottom:16px;font-size:.92rem}
+.err{color:#B3261E;font-size:.9rem;min-height:1.4em;margin-bottom:10px}
+.order-btns{display:grid;gap:10px}
+.order-btns .btn{width:100%}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:var(--ink);color:#fff;padding:12px 20px;font-size:.9rem;opacity:0;pointer-events:none;transition:.3s;z-index:200;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes rise{from{transform:translateY(18px);opacity:0}to{transform:none;opacity:1}}
+@keyframes hero-in{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.hero-copy>*{animation:hero-in .9s both}
+.hero-copy>*:nth-child(2){animation-delay:.15s}.hero-copy>*:nth-child(3){animation-delay:.3s}.hero-copy>*:nth-child(4){animation-delay:.45s}
+
+@media(max-width:900px){
+  .burger{display:block}
+  .links{position:absolute;top:64px;left:0;right:0;background:#fff;flex-direction:column;gap:0;border-bottom:1px solid var(--line);max-height:0;overflow:hidden;transition:max-height .35s}
+  .links.open{max-height:360px}
+  .links a{display:block;padding:16px 22px}
+  .hero-grid{grid-template-columns:1fr;min-height:0}
+  .hero-copy{padding:40px 22px}
+  .hero-img{min-height:56vh;order:2}
+  .product,.about-grid{grid-template-columns:1fr;gap:28px}
+  .product:nth-of-type(even) .gallery{order:0}
+  .foot{grid-template-columns:1fr}
+  section{padding:64px 0}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#home">THE A</a>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <ul class="links" id="links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#" data-sizeguide>Size Guide</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+<div class="hero" id="home">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <h1>THE A</h1>
+      <p>Your style. Your statement.</p>
+      <span class="sub">Soft fabrics and clean lines for everyday confidence.</span>
+      <a class="btn" href="#shop">EXPLORE THE COLLECTION</a>
+    </div>
+    <div class="hero-img"><div class="frame" data-src="images/hero.jpg" data-alt="THE A campaign"></div></div>
+  </div>
+</div>
+
+<section id="shop">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>The collection</h2>
+      <p>Three pieces, each at a special price.</p>
+    </div>
+    <div class="notice"><strong>How ordering works:</strong> there is no online checkout. Choose your size, tap HOW TO ORDER, and send us your order by direct message on Instagram, WhatsApp or Facebook. We will confirm availability with you there.</div>
+    <div id="products"></div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div>
+      <h2>About THE A</h2>
+      <p>THE A is a women's clothing brand built around feminine style and thoughtful details. Each piece is designed to feel easy to wear and polished enough for any day.</p>
+      <p>We believe confidence is something you put on with the everyday things you reach for first.</p>
+    </div>
+    <div class="frame" data-src="images/hero.jpg" data-alt="THE A brand photo"></div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Order or ask us anything</h2>
+      <p>Send us a message and we will reply with availability and delivery details.</p>
+    </div>
+    <div class="opts">
+      <a class="btn" data-social="instagram" href="#" target="_blank" rel="noopener">INSTAGRAM</a>
+      <a class="btn" data-social="whatsapp" href="#" target="_blank" rel="noopener">WHATSAPP</a>
+      <a class="btn" data-social="facebook" href="#" target="_blank" rel="noopener">FACEBOOK</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><span class="logo">THE A</span><p>Your style. Your statement.</p></div>
+      <ul>
+        <li><a href="#home">Home</a></li><li><a href="#shop">Shop</a></li>
+        <li><a href="#" data-sizeguide>Size Guide</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li>
+      </ul>
+      <ul>
+        <li><a data-social="instagram" href="#" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a data-social="whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a></li>
+        <li><a data-social="facebook" href="#" target="_blank" rel="noopener">Facebook</a></li>
+      </ul>
+    </div>
+    <div class="copy">© <span id="yr"></span> THE A. All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- Size guide modal -->
+<div class="modal" id="sizeModal" role="dialog" aria-modal="true" aria-labelledby="sgTitle">
+  <div class="box">
+    <button class="x" data-close aria-label="Close size guide">&times;</button>
+    <h3 id="sgTitle">Size guide</h3>
+    <p class="small">All measurements are in centimeters (cm).</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Size</th><th>Bust (cm)</th><th>Waist (cm)</th><th>Hips (cm)</th></tr></thead>
+        <tbody id="sizeRows"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Order modal -->
+<div class="modal" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="ordTitle">
+  <div class="box">
+    <button class="x" data-close aria-label="Close order panel">&times;</button>
+    <h3 id="ordTitle">How to order</h3>
+    <p class="small">Orders are placed by direct message. Pick the app you prefer and send us your selection.</p>
+    <div class="summary" id="ordSummary"></div>
+    <div class="err" id="ordErr" role="alert"></div>
+    <div class="order-btns">
+      <button class="btn" id="ordWA">ORDER VIA WHATSAPP</button>
+      <button class="btn ghost" id="ordIG">ORDER VIA INSTAGRAM</button>
+      <button class="btn ghost" id="ordFB">ORDER VIA FACEBOOK</button>
+    </div>
+    <p class="small" style="margin-top:14px">For Instagram and Facebook, your order message is copied so you can paste it into the chat.</p>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ============ CONFIG: replace with your real details ============ */
+const INSTAGRAM_URL  = "https://www.instagram.com/YOUR_INSTAGRAM";   // your Instagram profile link
+const WHATSAPP_NUMBER = "20XXXXXXXXXX";                              // country code + number, digits only (Egypt format: 20 then your number without the leading 0)
+const FACEBOOK_URL   = "https://m.me/YOUR_FACEBOOK_PAGE";            // Messenger link or Facebook page link
+/* ================================================================= */
+
+const BRAND = "THE A";
+const SIZES = ["XS","S","M","L","XL","XXL"];
+const SIZE_TABLE = [
+  ["XS","78–82","60–64","84–88"],["S","82–86","64–68","88–92"],["M","86–92","68–74","92–98"],
+  ["L","92–98","74–80","98–104"],["XL","98–104","80–86","104–110"],["XXL","104–110","86–92","110–116"]
+];
+
+/* Products. To add more photos, add paths to a product's "images" array. */
+const PRODUCTS = [
+  { id:"offline", name:"Offline Set", was:2100, now:1699, fabric:"Meltone",
+    desc:"A matching set in Meltone fabric, available in two color combinations.",
+    colors:[
+      { name:"White & Baby Pink", images:["images/offline-white-pink.jpg"] },
+      { name:"White & Navy",      images:["images/offline-white-navy.jpg"] }
+    ] },
+  { id:"ash", name:"Ash Set", was:1800, now:1399, fabric:"Soft fleece, knitted fabric (ترِيكوه)",
+    desc:"A grey matching set in soft fleece knit for easy, comfortable wear.",
+    colors:[ { name:"Grey", images:["images/ash-set-grey.jpg"] } ] },
+  { id:"candy", name:"Candy Knit Cardigan", was:1200, now:850, fabric:null,
+    desc:"A knit cardigan in off-white, easy to layer over your everyday outfits.",
+    colors:[ { name:"Off-white", images:["images/candy-knit-cardigan.jpg"] } ] }
+];
+
+const state = {}; // per product: { color, size, imgIndex }
+PRODUCTS.forEach(p => state[p.id] = { color: p.colors.length > 1 ? null : p.colors[0].name, size:null, imgIndex:0 });
+let orderingId = null;
+
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const fmt = n => "EGP " + n.toLocaleString("en-US");
+const colorOf = p => p.colors.find(c => c.name === state[p.id].color) || p.colors[0];
+
+/* Image with graceful fallback */
+function mountImage(frame, src, alt){
+  frame.classList.remove("missing");
+  frame.innerHTML = '<img alt="" loading="lazy"><div class="fallback"><b>THE A</b><small>Product photo coming soon</small></div>';
+  const img = $("img", frame);
+  img.alt = alt || "";
+  img.onerror = () => frame.classList.add("missing");
+  img.src = src;
+}
+
+/* Render products */
+function renderProducts(){
+  $("#products").innerHTML = PRODUCTS.map(p => {
+    const off = Math.round((1 - p.now / p.was) * 100);
+    const colorRow = p.colors.length > 1 ? `
+      <div class="row">
+        <div class="label"><strong>Color</strong><span id="${p.id}-colorname">Select a color</span></div>
+        <div class="opts">${p.colors.map(c => `<button class="opt" data-color="${c.name}" data-pid="${p.id}" aria-pressed="false">${c.name}</button>`).join("")}</div>
+      </div>` : `
+      <div class="row"><div class="label"><strong>Color</strong><span>${p.colors[0].name}</span></div></div>`;
+    return `
+    <article class="product" id="${p.id}" data-pid="${p.id}">
+      <div class="gallery">
+        <div class="main-img"><span class="badge">${off}% OFF</span><div class="frame" id="${p.id}-main"></div></div>
+        <div class="thumbs" id="${p.id}-thumbs"></div>
+      </div>
+      <div class="info">
+        <h3>${p.name}</h3>
+        <div class="price"><span class="now">${fmt(p.now)}</span><span class="was">${fmt(p.was)}</span><span class="off">Save ${off}%</span></div>
+        <p class="desc">${p.desc}${p.fabric ? `<br><strong>Fabric:</strong> ${p.fabric}` : ""}</p>
+        ${colorRow}
+        <div class="row">
+          <div class="label"><strong>Size</strong><button class="link" data-sizeguide>SIZE GUIDE</button></div>
+          <div class="opts">${SIZES.map(s => `<button class="opt" data-size="${s}" data-pid="${p.id}" aria-pressed="false">${s}</button>`).join("")}</div>
+        </div>
+        <div class="actions"><button class="btn" data-order="${p.id}">HOW TO ORDER</button></div>
+      </div>
+    </article>`;
+  }).join("");
+  PRODUCTS.forEach(updateGallery);
+}
+
+function updateGallery(p){
+  const imgs = colorOf(p).images, st = state[p.id];
+  if (st.imgIndex >= imgs.length) st.imgIndex = 0;
+  mountImage($(`#${p.id}-main`), imgs[st.imgIndex], `${p.name} — ${colorOf(p).name}`);
+  const t = $(`#${p.id}-thumbs`);
+  t.innerHTML = imgs.length > 1 ? imgs.map((src,i) =>
+    `<button class="thumb ${i===st.imgIndex?"active":""}" data-pid="${p.id}" data-i="${i}" aria-label="Photo ${i+1}"><div class="frame" data-src="${src}"></div></button>`).join("") : "";
+  $$(".frame[data-src]", t).forEach(f => mountImage(f, f.dataset.src, ""));
+}
+
+/* Selection handling (event delegation) */
+document.addEventListener("click", e => {
+  const t = e.target;
+  const colorBtn = t.closest("[data-color]");
+  if (colorBtn){
+    const p = PRODUCTS.find(x => x.id === colorBtn.dataset.pid);
+    state[p.id].color = colorBtn.dataset.color; state[p.id].imgIndex = 0;
+    $$(`[data-color][data-pid="${p.id}"]`).forEach(b => b.setAttribute("aria-pressed", b === colorBtn));
+    $(`#${p.id}-colorname`).textContent = colorBtn.dataset.color;
+    updateGallery(p); return;
+  }
+  const sizeBtn = t.closest("[data-size]");
+  if (sizeBtn){
+    const id = sizeBtn.dataset.pid; state[id].size = sizeBtn.dataset.size;
+    $$(`[data-size][data-pid="${id}"]`).forEach(b => b.setAttribute("aria-pressed", b === sizeBtn)); return;
+  }
+  const thumb = t.closest(".thumb");
+  if (thumb){
+    const p = PRODUCTS.find(x => x.id === thumb.dataset.pid);
+    state[p.id].imgIndex = +thumb.dataset.i; updateGallery(p); return;
+  }
+  if (t.closest("[data-sizeguide]")){ e.preventDefault(); closeMenu(); openModal("#sizeModal"); return; }
+  const ord = t.closest("[data-order]");
+  if (ord){ openOrder(ord.dataset.order); return; }
+  if (t.matches(".modal") || t.closest("[data-close]")) closeModals();
+});
+
+/* Modals */
+function openModal(sel){ $(sel).classList.add("show"); document.body.style.overflow = "hidden"; $(".x", $(sel)).focus(); }
+function closeModals(){ $$(".modal").forEach(m => m.classList.remove("show")); document.body.style.overflow = ""; }
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModals(); });
+$("#sizeRows").innerHTML = SIZE_TABLE.map(r => `<tr><td><strong>${r[0]}</strong></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("");
+
+/* Ordering */
+function buildMessage(p){
+  const st = state[p.id], color = st.color;
+  const colorPart = p.colors.length > 1 ? ` Color: ${color}.` : ` Color: ${colorOf(p).name}.`;
+  return `Hello ${BRAND}! I'd like to order the ${p.name}.${colorPart} Size: ${st.size}. Please confirm availability.`;
+}
+function openOrder(id){
+  orderingId = id;
+  const p = PRODUCTS.find(x => x.id === id), st = state[id];
+  $("#ordSummary").innerHTML = `<strong>${p.name}</strong> — ${fmt(p.now)}<br>Color: ${st.color || "not selected"} · Size: ${st.size || "not selected"}`;
+  $("#ordErr").textContent = "";
+  openModal("#orderModal");
+}
+function missingOptions(p){
+  const st = state[p.id], miss = [];
+  if (p.colors.length > 1 && !st.color) miss.push("a color");
+  if (!st.size) miss.push("a size");
+  return miss;
+}
+function toast(msg){
+  const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 3200);
+}
+function ready(){
+  const p = PRODUCTS.find(x => x.id === orderingId), miss = missingOptions(p);
+  if (miss.length){ $("#ordErr").textContent = `Please select ${miss.join(" and ")} for the ${p.name} before ordering. Close this panel and choose on the product.`; return null; }
+  $("#ordErr").textContent = ""; return p;
+}
+$("#ordWA").onclick = () => {
+  const p = ready(); if (!p) return;
+  if (/X/.test(WHATSAPP_NUMBER)) toast("Add your WhatsApp number in the CONFIG section of index.html.");
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildMessage(p))}`, "_blank", "noopener");
+};
+function dmOpen(url){
+  const p = ready(); if (!p) return;
+  const msg = buildMessage(p);
+  (navigator.clipboard ? navigator.clipboard.writeText(msg) : Promise.reject()).then(
+    () => toast("Order message copied. Paste it in the chat."), () => toast("Send us: " + msg));
+  window.open(url, "_blank", "noopener");
+}
+$("#ordIG").onclick = () => dmOpen(INSTAGRAM_URL);
+$("#ordFB").onclick = () => dmOpen(FACEBOOK_URL);
+
+/* Social links in contact + footer */
+$$("[data-social]").forEach(a => {
+  const k = a.dataset.social;
+  a.href = k === "instagram" ? INSTAGRAM_URL : k === "facebook" ? FACEBOOK_URL : `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hello " + BRAND + "!")}`;
+});
+
+/* Mobile menu */
+const burger = $("#burger"), links = $("#links");
+function closeMenu(){ links.classList.remove("open"); burger.classList.remove("open"); burger.setAttribute("aria-expanded","false"); }
+burger.onclick = () => { const o = links.classList.toggle("open"); burger.classList.toggle("open", o); burger.setAttribute("aria-expanded", o); };
+$$(".links a[href^='#']:not([data-sizeguide]), .hero a, footer a[href^='#']").forEach(a => a.addEventListener("click", closeMenu));
+
+/* Init */
+renderProducts();
+$$(".frame[data-src]").forEach(f => { if (!$("img", f)) mountImage(f, f.dataset.src, f.dataset.alt); });
+$("#yr").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
